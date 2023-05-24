@@ -11,9 +11,7 @@ from django_apscheduler.models import DjangoJobExecution
 logger = logging.getLogger(__name__)
 
 
-# наша задача по выводу текста на экран
-def my_job():
-    #  Your job processing logic here...
+def send_verifications_email():
     print('hello from job')
 
 
@@ -32,10 +30,10 @@ class Command(BaseCommand):
 
         # добавляем работу нашему задачнику
         scheduler.add_job(
-            my_job,
+            send_verifications_email,
             trigger=CronTrigger(second="*/10"),
             # Тоже самое что и интервал, но задача тригера таким образом более понятна django
-            id="my_job",  # уникальный айди
+            id="send_verifications_email",  # уникальный айди
             max_instances=1,
             replace_existing=True,
         )

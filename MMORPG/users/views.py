@@ -1,8 +1,10 @@
+from .functions import send_verify_mail
 from django.shortcuts import render, HttpResponseRedirect
 from django.contrib import auth, messages
-from users.models import User
-from users.forms import UserLoginForm, UserRegistrationForm, UserProfileForm
+from users.forms import UserLoginForm, UserRegistrationForm, UserProfileForm, SecretCodeForm
 from django.urls import reverse
+
+
 def login(request):
     if request.method == 'POST':
         form = UserLoginForm(data=request.POST)
@@ -23,8 +25,9 @@ def registration(request):
         form = UserRegistrationForm(data=request.POST)
         if form.is_valid():
             form.save()
-            messages.success(request, 'Вы успешно зарегистрировались!')
-            return HttpResponseRedirect(reverse('users:login'))
+            secret_code = send_verify_mail(request.POST)
+            request.session['secret_code'] = secret_code
+            return HttpResponseRedirect(reverse('users:check_email'))
     else:
         form = UserRegistrationForm()
     context = {'form':form}
@@ -44,3 +47,16 @@ def profile(request):
 def logout(request):
     auth.logout(request)
     return HttpResponseRedirect(reverse('index'))
+
+def check_email(request):
+    secret_code = request.session.get('secret_code')
+    initial_data = {'secret_code': secret_code}
+    if request.method == 'POST':
+        form = SecretCodeForm(initial=initial_data, data=request.POST)
+        if form.is_valid():
+            messages.success(request, 'Вы успешно зарегистрировались!')
+            return HttpResponseRedirect(reverse('users:login'))
+    else:
+        form = SecretCodeForm(initial=initial_data)
+    context = {'form':form}
+    return render(request, 'users/email_verification.html', context)

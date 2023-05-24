@@ -1,0 +1,48 @@
+/*Это для браузера Chrome:*/
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+-webkit-appearance: none;
+margin: 0;
+}
+/*Это для браузера Firefox:*/
+input[type="number"] {
+-moz-appearance: textfield;
+}
+
+/*Для других*/
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+-webkit-appearance: none;
+margin: 0;
+}
+
+.container{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: 40vh;
+}
+
+.main_area{
+    padding: 40px;
+    font-size: 25px;
+    height: fit-content;
+    width: fit-content;
+    text-align: center;
+}
+.secret_code_input{
+    text-align: center;
+    height: 60px;
+    width: 100px;
+    font-size: 25px;
+    font-weight: bold;
+    border: 1px solid black;
+    letter-spacing: 3px;
+    border-radius: 10px;
+}
+
+.errorlist{
+    color: red;
+    list-style-type: none;
+    width: 93%;
+}
