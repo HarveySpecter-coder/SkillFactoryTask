@@ -1,7 +1,7 @@
 {% extends 'board/default.html' %}
 {% load static %}
     {% block css %}
-
+    <link href="{% static 'board/css/style.css' %}" rel="stylesheet">
     {% endblock %}
 
 
@@ -10,7 +10,21 @@
 {% block content %}
 
 <div style="display: flex; margin-top: 60px; height: 90vh">
-    <div style="border: 1px solid black; font-size: 25px; flex-grow: 2; margin-top: 10px; margin-left: 10%; margin-right: 40px">1</div>
-    <div style="border: 1px solid black; font-size: 25px; flex-grow: 1; margin-top: 10px; margin-right: 10%">2</div>
+    <div style="flex-grow: 2; margin-top: 10px; margin-left: 10%; margin-right: 40px">
+{#        {% for video in videos %}#}
+{#                <div class="ratio ratio-16x9">#}
+{#                    <iframe src="{{ video.video.url}}" title="YouTube video" allowfullscreen></iframe>#}
+{#                </div>#}
+{#        {% endfor %}#}
+        {% for article in articles %}
+            <div class="bd-callout">
+            <p class="h3 font-weight-bolder">{{ article.title }}</p>
+            <p class="h5 font-weight-normal">{{ article.text }}</p>
+            </div>
+        {% endfor %}
+    </div>
+    <div style="border: 1px solid black; font-size: 25px; flex-grow: 1; margin-top: 10px; margin-right: 10%">
+        <a href="{% url 'board:add_article' %}">2</a>
+    </div>
 </div>
 {% endblock %}

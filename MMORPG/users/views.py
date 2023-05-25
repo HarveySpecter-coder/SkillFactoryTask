@@ -41,7 +41,7 @@ def profile(request):
             return HttpResponseRedirect(reverse('users:profile'))
     else:
         form = UserProfileForm(instance=request.user)
-    context = {'title':'Ваш Профиль', 'form':form}
+    context = {'title':'Ваш профиль', 'form':form}
     return render(request, 'users/profile.html', context)
 
 def logout(request):
