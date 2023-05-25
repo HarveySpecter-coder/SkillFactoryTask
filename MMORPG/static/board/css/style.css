@@ -7,3 +7,32 @@
     border-radius: 0.25rem;
     border-left-color: #f0ad4e;
 }
+
+.sidebar{
+    grid-area: sidebar;
+    text-align: center;
+}
+
+.a_cat_filter{
+    text-decoration: none !important;
+}
+
+#category_buttons{
+    width: 40%;
+    border-radius: 10px;
+    border-color: #6f94c6;
+    margin-bottom: 6px;
+}
+
+#category_buttons:hover{
+    scale: 110%;
+}
+
+ul {
+    list-style-type: none;
+}
+
+.add-article{
+    margin-top: 30px;
+    width: 45%;
+}

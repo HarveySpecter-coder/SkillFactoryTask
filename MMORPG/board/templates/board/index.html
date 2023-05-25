@@ -19,12 +19,29 @@
         {% for article in articles %}
             <div class="bd-callout">
                 <a href="{% url 'board:article_detail' article.id %}"><p class="h3 font-weight-bolder">{{ article.title }}</p></a>
-                <p class="h5 font-weight-normal">{{ article.text }}</p>
+                <p class="h5 font-weight-normal">{{ article.text|truncatechars:50 }}</p>
             </div>
         {% endfor %}
     </div>
-    <div style="border: 1px solid black; font-size: 25px; flex-grow: 1; margin-top: 10px; margin-right: 10%">
-        <a href="{% url 'board:add_article' %}">2</a>
+    <div style="flex-grow: 1; margin-top: 10px; margin-right: 10%">
+        <div class="item sidebar">
+            <ul>
+                {% for category in categories %}
+                <li>
+                    <button id="category_buttons" class="btn btn-light">
+                        <a class="a_cat_filter" href="{% url 'board:category' category.id %}">{{ category.name }}</a>
+                    </button>
+                </li>
+                {% endfor %}
+            <button class="btn btn btn-warning add-article">
+                    <a href="{% url 'board:add_article' %}">Добавить новость</a>
+                </button>
+            </ul>
+
+        </div>
+
+
+
     </div>
 </div>
 {% endblock %}

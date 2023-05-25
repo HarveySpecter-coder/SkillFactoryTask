@@ -24,7 +24,17 @@
             </div>
     </div>
     <div style="border: 1px solid black; font-size: 25px; flex-grow: 1; margin-top: 10px; margin-right: 10%">
-        2
+        <div class="item sidebar">
+            <ul>
+                {% for category in categories %}
+                <li>
+                    <button id="category_buttons" class="btn btn-light">
+                        <a class="a_cat_filter" href="{% url 'board:category' category.id %}">{{ category.name }}</a>
+                    </button>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
     </div>
 </div>
 {% endblock %}

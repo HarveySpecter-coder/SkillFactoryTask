@@ -1,6 +1,6 @@
 from django.shortcuts import render, HttpResponseRedirect
 from .forms import ArticleForm
-from .models import Article
+from .models import Article, Category
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 
@@ -17,9 +17,14 @@ def add_article(request):
     context = {'title':'Добавить статью', 'form':form}
     return render(request, 'board/add_new_post.html', context)
 
-def index(request):
-    articles = Article.objects.all()
-    context = {'articles':articles}
+def index(request, category_id=None):
+    if category_id:
+        current_category = Category.objects.get(id=category_id)
+        articles = Article.objects.filter(category=current_category)
+    else:
+        articles = Article.objects.all()
+    categories = Category.objects.all()
+    context = {'articles':articles, 'categories':categories}
     return render(request, 'board/index.html', context)
 
 def article_detail(request, article_id):
