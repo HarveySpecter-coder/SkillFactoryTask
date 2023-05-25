@@ -1,6 +1,7 @@
 from .functions import send_verify_mail
 from django.shortcuts import render, HttpResponseRedirect
 from django.contrib import auth, messages
+from django.contrib.auth.decorators import login_required
 from users.forms import UserLoginForm, UserRegistrationForm, UserProfileForm, SecretCodeForm
 from django.urls import reverse
 
@@ -14,7 +15,7 @@ def login(request):
             user = auth.authenticate(username = username, password = password)
             if user:
                 auth.login(request, user)
-                return HttpResponseRedirect(reverse('index'))
+                return HttpResponseRedirect(reverse('board:index'))
     else:
         form = UserLoginForm()
     context = {'form': form}
@@ -33,6 +34,7 @@ def registration(request):
     context = {'form':form}
     return render(request, 'users/register.html', context)
 
+@login_required
 def profile(request):
     if request.method == 'POST':
         form = UserProfileForm(instance=request.user, data=request.POST, files=request.FILES)
@@ -44,9 +46,10 @@ def profile(request):
     context = {'title':'Ваш профиль', 'form':form}
     return render(request, 'users/profile.html', context)
 
+@login_required
 def logout(request):
     auth.logout(request)
-    return HttpResponseRedirect(reverse('index'))
+    return HttpResponseRedirect(reverse('board:index'))
 
 def check_email(request):
     secret_code = request.session.get('secret_code')

@@ -3,10 +3,6 @@
     {% block css %}
     <link href="{% static 'board/css/style.css' %}" rel="stylesheet">
     {% endblock %}
-
-
-
-
 {% block content %}
 
 <div style="display: flex; margin-top: 60px; height: 90vh">
@@ -16,15 +12,19 @@
 {#                    <iframe src="{{ video.video.url}}" title="YouTube video" allowfullscreen></iframe>#}
 {#                </div>#}
 {#        {% endfor %}#}
-        {% for article in articles %}
             <div class="bd-callout">
-                <a href="{% url 'board:article_detail' article.id %}"><p class="h3 font-weight-bolder">{{ article.title }}</p></a>
-                <p class="h5 font-weight-normal">{{ article.text }}</p>
+            <p class="h3 font-weight-bolder">{{ article.title }}</p>
+            <p class="h5 font-weight-normal">{{ article.text }}</p>
+                {% if article.image %}
+                    <p><img src="{{ article.image.url }} " width="20%"></p>
+                {% endif %}
+                {% if article.video %}
+                    <iframe src="{{ article.video.url}}" title="Video" allowfullscreen></iframe>
+                {% endif %}
             </div>
-        {% endfor %}
     </div>
     <div style="border: 1px solid black; font-size: 25px; flex-grow: 1; margin-top: 10px; margin-right: 10%">
-        <a href="{% url 'board:add_article' %}">2</a>
+        2
     </div>
 </div>
 {% endblock %}
